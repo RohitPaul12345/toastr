@@ -1,17 +1,17 @@
 /* jshint node:true, camelcase:false */
-var gulp = require('gulp');
-var karma = require('karma').server;
-var merge = require('merge-stream');
-var plug = require('gulp-load-plugins')();
+let gulp = require('gulp');
+let karma = require('karma').server;
+let merge = require('merge-stream');
+let plug = require('gulp-load-plugins')();
 
-var paths = {
+let paths = {
     js: './toastr.js',
     less: './toastr.less',
     report: './report',
     build: './build'
 };
 
-var log = plug.util.log;
+let log = plug.util.log;
 
 /**
  * List the available gulp tasks
@@ -25,8 +25,8 @@ gulp.task('help', plug.taskListing);
 gulp.task('analyze', function () {
     log('Analyzing source with JSHint and JSCS');
 
-    var jshint = analyzejshint([paths.js]);
-    var jscs = analyzejscs([paths.js]);
+    let jshint = analyzejshint([paths.js]);
+    let jscs = analyzejscs([paths.js]);
 
     return merge(jshint, jscs);
 });
@@ -87,7 +87,7 @@ gulp.task('clean', function (cb) {
     log('Cleaning: ' + plug.util.colors.blue(paths.report));
     log('Cleaning: ' + plug.util.colors.blue(paths.build));
 
-    var delPaths = [paths.build, paths.report];
+    let delPaths = [paths.build, paths.report];
     del(delPaths, cb);
 });
 
@@ -110,7 +110,7 @@ gulp.task('test', function (done) {
  * @return {Stream}
  */
 function analyzejshint(sources, overrideRcFile) {
-    var jshintrcFile = overrideRcFile || './.jshintrc';
+    let jshintrcFile = overrideRcFile || './.jshintrc';
     log('Running JSHint');
     return gulp
         .src(sources)
@@ -159,7 +159,7 @@ function startTests(singleRun, done) {
  * @return {String}      Difference in bytes, formatted
  */
 function bytediffFormatter(data) {
-    var difference = (data.savings > 0) ? ' smaller.' : ' larger.';
+    let difference = (data.savings > 0) ? ' smaller.' : ' larger.';
     return data.fileName + ' went from ' +
         (data.startSize / 1000).toFixed(2) + ' kB to ' + (data.endSize / 1000).toFixed(2) + ' kB' +
         ' and is ' + formatPercent(1 - data.percent, 2) + '%' + difference;
